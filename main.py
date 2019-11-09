@@ -6,9 +6,6 @@ app = Flask(__name__)
 
 @app.route('/')
 def root():
-	text = "Hello world!"
-	print(nlp.get_sent(text))
-	print(nlp.get_categories(text))
 	return render_template('index.html')
 
 
