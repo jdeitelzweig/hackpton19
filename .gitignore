@@ -4,6 +4,9 @@
 # vscode stuff
 .vscode/
 
+# API key
+google-cloud-key.json
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
