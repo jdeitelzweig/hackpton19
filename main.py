@@ -9,13 +9,13 @@ app = Flask(__name__)
 def root():
 	return render_template('index.html')
 
-@app.route('/_transcript', methods = ['POST'])
+@app.route('/_transcript', methods=['POST'])
 def handleTS():
 	if request.method == 'POST':
 		print("RECEIVED POST REQUEST")
-		print("PRINTED: " + json.dumps(request.json))
+		print("PRINTED: " + json.dumps(request.json["ts"]))
 
-	return True
+	return "200"
 
 # For development server only
 if __name__ == '__main__':
