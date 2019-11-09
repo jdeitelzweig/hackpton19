@@ -1,61 +1,21 @@
-// function getWPM() {
-//     const MAX_WPM = 190; // Seems to work
-
-//     window.SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
-//     let finalTranscript = '';
-//     let count = 0;
-//     let n = 0;
-//     let recognition = new window.SpeechRecognition();
-//     var wpm = 0;
-//     var d = new Date();
-//     var startTime = d.getSeconds();
-//     var reset = true;
-//     recognition.interimResults = true;
-//     recognition.maxAlternatives = 10;
-//     recognition.continuous = true;
-//     recognition.onresult = (event) => {
-//         if (reset) {
-//             d = new Date();
-//             startTime = d.getSeconds();
-//             reset = false;
-//         }
-//         let interimTranscript = '';
-//         for (let i = event.resultIndex, len = event.results.length; i < len; i++) {
-//             let transcript = event.results[i][0].transcript;
-//             if (event.results[i].isFinal) {
-//                 n = transcript.split(" ").length;
-//                 finalTranscript += transcript; count += n;
-//                 if (count >= 5) {
-//                     var newD = new Date();
-//                     var endTime = newD.getSeconds();
-//                     if (endTime < startTime) endTime += 60;
-//                     wpm = (count / (endTime - startTime)) * 60;
-//                     makeRequest(finalTranscript, wpm);
-//                     // if (wpm > MAX_WPM) {
-//                     //     document.querySelector('body').setAttribute("style", "background-color:red");
-//                     // }
-//                     // else {
-//                     //     document.querySelector('body').setAttribute("style", "background-color:green");
-//                     // }
-//                     count = 0;
-//                     reset = true;
-//                 }
-//             } else {
-//                 interimTranscript += transcript;
-//             }
-//         }
-//         document.querySelector('body').innerHTML = count + ", " + wpm + ", " + startTime + ", " + endTime + "\n" + finalTranscript + " " + interimTranscript;
-//     }
-//     recognition.start();
-// }
 
 var recognition = null;
+var socket = io.connect('http://localhost:5000/emit');
+var wpms = [];
+var sents_received = [];
+var confidences = [];
 
-function makeRequest(transcript, words_per_minute) {
+socket.on('nlp_sent', function(msg) {
+    console.log("Received sentiment: " + msg.sent);
+    sents_received.push(msg.sent);
+})
+
+function makeRequest(transcript, words_per_minute, conf) {
     console.log("Making request");
     var newTranscript = {
         ts: transcript,
-        wpm: words_per_minute
+        wpm: words_per_minute,
+        confidence: conf
     };
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open("POST", "/_transcript", true);
@@ -67,7 +27,7 @@ function makeRequest(transcript, words_per_minute) {
 
 function setup() {
     const MAX_WPM = 190; // Maximum speech acceptable words per minute
-    const NUM_WORD_SPLITTER = 7; // Checks wpm everytime more than this many words are read.
+    const MAX_WORDS = 4;
 
     window.SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition; // Setup speech recognition
 
@@ -98,16 +58,20 @@ function setup() {
 
         for (let i = event.resultIndex, len = event.results.length; i < len; i++) {
             let transcript = event.results[i][0].transcript;
+            let confidence = event.results[i][0].confidence;
             if (event.results[i].isFinal) {
                 interimWordCount = transcript.split(" ").length;
                 finalTranscript += transcript; currentWordCount += interimWordCount;
-                if (interimWordCount >= NUM_WORD_SPLITTER) {
+                if (interimWordCount >= MAX_WORDS) {
                     var newD = new Date();
                     var endTime = newD.getSeconds();
                     if (endTime < startTime) endTime += 60;
                     wpm = (currentWordCount / (endTime - startTime)) * 60;
+                    wpms.push(wpm);
+                    confidences.push(confidence);
+                    console.log("CONFIDENCE: " + confidence);
                     console.log("About to make request");
-                    makeRequest(transcript, wpm);
+                    makeRequest(transcript, wpm, confidence);
                     console.log("TRANSCRIPT: " + transcript);
                     currentWordCount = 0;
                     reset = true;
