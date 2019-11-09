@@ -134,6 +134,8 @@ def listen_print_loop(responses):
 
         # Display the transcription of the top alternative.
         transcript = result.alternatives[0].transcript
+        conf = result.alternatives[0].confidence
+        words = result.alternatives[0].words
 
         # Display interim results, but with a carriage return at the end of the
         # line, so subsequent lines will overwrite them.
@@ -150,6 +152,9 @@ def listen_print_loop(responses):
 
         else:
             print(transcript + overwrite_chars)
+            print(conf)
+            for word in words:
+                print(word.start_time.seconds)
 
             # Exit recognition if any of the transcribed phrases could be
             # one of our keywords.
@@ -169,7 +174,8 @@ def main():
     config = types.RecognitionConfig(
         encoding=enums.RecognitionConfig.AudioEncoding.LINEAR16,
         sample_rate_hertz=RATE,
-        language_code=language_code)
+        language_code=language_code,
+        enable_word_time_offsets=True)
     streaming_config = types.StreamingRecognitionConfig(
         config=config,
         interim_results=True)
