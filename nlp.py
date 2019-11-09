@@ -19,8 +19,7 @@ def get_sent(text):
 	# Detects the sentiment of the text
 	sentiment = client.analyze_sentiment(document=document).document_sentiment
 
-	print('Text: {}'.format(text))
-	print('Sentiment: {}, {}'.format(sentiment.score, sentiment.magnitude))
+	return sentiment.score, sentiment.magnitude
 
 if __name__ == "__main__":
-	print(get_sent("hello world"))
+	print(get_sent("hello world!"))
