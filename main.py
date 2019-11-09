@@ -1,5 +1,5 @@
 import json
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import nlp
 
 app = Flask(__name__)
@@ -14,10 +14,8 @@ def handleTS():
 	if request.method == 'POST':
 		print("RECEIVED POST REQUEST")
 		print("PRINTED: " + json.dumps(request.json))
-		#data = request.json
-		#print("JSON: " + json.dumps(data));
-	
-	return "done"
+
+	return True
 
 # For development server only
 if __name__ == '__main__':
