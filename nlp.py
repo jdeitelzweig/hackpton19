@@ -62,7 +62,7 @@ def entity_sent(text):
 			"sent_mag": ent.sentiment.magnitude
 			}
 		
-	return sorted(list(ents.values()), key=lambda x:x["salience"])
+	return sorted(list(ents.values()), key=lambda x: x["salience"])
 
 
 if __name__ == "__main__":
