@@ -41,7 +41,28 @@ def get_categories(text):
     	type=enums.Document.Type.PLAIN_TEXT)
 
 	categories = client.classify_text(document=document).categories
+	# each has name and confidence fields
 	return categories
+
+
+def entity_sent(text):
+	document = types.Document(
+    	content=text,
+    	type=enums.Document.Type.PLAIN_TEXT)
+
+	ent_sent = client.analyze_entity_sentiment(document=document).entities
+	# each has name, sentiment, mentions fields
+	ents = {}
+	for ent in ent_sent:
+		ents[ent.name] = {
+			"name": ent.name,
+			"type": enums.Entity.Type(ent.type).name,
+			"salience": ent.salience,
+			"sent_score": ent.sentiment.score,
+			"sent_mag": ent.sentiment.magnitude
+			}
+		
+	return sorted(list(ents.values()), key=lambda x:x["salience"])
 
 
 if __name__ == "__main__":
