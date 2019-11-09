@@ -5,9 +5,7 @@ from flask import Flask, render_template, request
 from flask_socketio import SocketIO, emit
 
 app = Flask(__name__)
-app.config['HOST'] = '127.0.0.1'
-app.config['PORT'] = 8080
-app.config['DEBUG'] = True
+#app.config['DEBUG'] = True
 socketio = SocketIO(app)
 
 fullTranscript = ''
