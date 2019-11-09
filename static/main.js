@@ -43,11 +43,15 @@ function runTimer() {
 }
 
 function beginTesting() {
-  runTimer();
+  startRecognition();
 }
 
 function endTesting() {
-  clearInterval(myTimer);
+  // var xmlhttp = new XMLHttpRequest();
+  // xmlhttp.open("POST", "/_transcript", true);
+  // xmlhttp.setRequestHeader('Content-Type', 'application/json');
+  // xmlhttp.send(JSON.stringify({"test":"abc", "t2s":"wpm"}));
+  stopRecognition();
 }
 // Get the element with id="defaultOpen" and click on it
-document.getElementById("defaultOpen").click();
+// document.getElementById("defaultOpen").click();
