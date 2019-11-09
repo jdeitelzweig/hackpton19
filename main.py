@@ -16,10 +16,11 @@ fullTranscript = ''
 def root():
 	return render_template('index.html')
 
-@app.route('/_transcript', methods = ['POST'])
+@app.route('/_transcript', methods=['POST'])
 def handleTS():
 	if request.method == 'POST':
 		print("RECEIVED POST REQUEST")
+    
 		transcript = json.dumps(request.json["ts"])
 		print("Transcript: " + json.dumps(request.json))
 		global fullTranscript
@@ -28,7 +29,7 @@ def handleTS():
 		print(nlp.get_sent(transcript))
 		socketio.emit('nlp_sent', {'sent': sent}, namespace="/emit")
 
-	return "done"
+	return "200"
 
 @socketio.on('connect', namespace='/emit')
 def test_connect():
