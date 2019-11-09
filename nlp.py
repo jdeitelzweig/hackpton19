@@ -34,7 +34,7 @@ def get_sent(text):
 def get_categories(text):
 	# Don't give an error if there isn't enough tokens
 	if len(get_tokens(text)) <= 20:
-		return None
+		return []
 
 	document = types.Document(
     	content=text,
