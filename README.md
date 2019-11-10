@@ -1,3 +1,3 @@
 # hackpton19
 
-Checking pace using speech to text and analyzing the sentiment and content of the speech using Google Cloud API
+Analyzes pace, sentiment, and clarity of speech using Google speech to text API, Google Cloud Natural Language Processing API, and Google App Engine 
