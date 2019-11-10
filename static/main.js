@@ -159,11 +159,19 @@ function beginTesting() {
   runGraphPace();
   runGraphClarity();
   runGraphSentiment();
+  startRecognition();
 }
 
 function endTesting() {
+  // var xmlhttp = new XMLHttpRequest();
+  // xmlhttp.open("POST", "/_transcript", true);
+  // xmlhttp.setRequestHeader('Content-Type', 'application/json');
+  // xmlhttp.send(JSON.stringify({"test":"abc", "t2s":"wpm"}));
   clearInterval(myTimer);
   clearInterval(myGraphOne);
   clearInterval(myGraphTwo);
   clearInterval(myGraphThree);
+  stopRecognition();
 }
+// Get the element with id="defaultOpen" and click on it
+// document.getElementById("defaultOpen").click();
