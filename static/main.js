@@ -50,7 +50,7 @@ var dataLength = 20; // number of dataPoints visible at any point
 var counter = 0;
 var avgWPM = 0;
 
-var updateChart = function (count) {
+var updateChartPace = function (count) {
   if (wpms[counter] != null) {
     avgWPM = (xVal * avgWPM + wpms[counter]) / (xVal + 1);
     yVal = avgWPM;
@@ -73,8 +73,8 @@ var updateChart = function (count) {
 	chart.render();
 };
 
-updateChart(dataLength);
-myGraphOne = setInterval(function(){updateChart()}, updateInterval);
+updateChartPace(dataLength);
+myGraphOne = setInterval(function(){updateChartPace()}, updateInterval);
 
 }
 
@@ -96,11 +96,11 @@ var chart = new CanvasJS.Chart("chartContainer3", {
 
 var xVal = 0;
 var yVal = 100;
-var updateInterval = 1000;
+var updateInterval = 5000;
 var dataLength = 20; // number of dataPoints visible at any point
 
-var updateChart = function (count) {
-  yVal = yVal + 1;
+var updateChartSentiment = function (count) {
+  yVal = sent * 100;
   dps.push({
     x: xVal,
     y: yVal
@@ -114,8 +114,8 @@ var updateChart = function (count) {
 	chart.render();
 };
 
-updateChart(dataLength);
-myGraphThree = setInterval(function(){updateChart()}, updateInterval);
+updateChartSentiment(dataLength);
+myGraphThree = setInterval(function(){updateChartSentiment()}, updateInterval);
 
 }
 
@@ -140,7 +140,7 @@ var yVal = 100;
 var updateInterval = 1000;
 var dataLength = 20; // number of dataPoints visible at any point
 
-var updateChart = function (count) {
+var updateChartClarity = function (count) {
   yVal = yVal + 1;
   dps.push({
     x: xVal,
@@ -155,8 +155,8 @@ var updateChart = function (count) {
 	chart.render();
 };
 
-updateChart(dataLength);
-myGraphTwo = setInterval(function(){updateChart()}, updateInterval);
+updateChartClarity(dataLength);
+myGraphTwo = setInterval(function(){updateChartClarity()}, updateInterval);
 
 }
 
