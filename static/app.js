@@ -4,9 +4,12 @@ var recognition = null;
 var wpms = [];
 var sents_received = [];
 var confidences = [];
+
 var wc = 0;
 var prevWC = 0;
 var deltaWC = 0;
+var sent = 0
+
 // socket.on('nlp_sent', function(msg) {
 //     console.log("Received sentiment: " + msg.sent);
 //     sents_received.push(msg.sent);
@@ -23,6 +26,7 @@ function makeRequest(transcript, words_per_minute, conf) {
     xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState == XMLHttpRequest.DONE) {
             console.log("RECEIVED BACK: " + xmlhttp.responseText);
+            sent = xmlhttp.responseText
             sents_received.push(parseFloat(xmlhttp.responseText));
             // UPDATE GRAPH HERE
         }

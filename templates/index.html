@@ -10,23 +10,17 @@
   <script src="static/main.js"></script>
 </head>
 <body>
-  <div class="header">
-  <div class="info">
-    <h1>cicero</h1>
-    <h6>Machine-Learning Based Speech Analysis</a></h6>
-  </div>
-</div>
     <p>This application is designed to display real-time results for your
     speech</p>
 
-    <button class="timerStartButton" onclick="beginTesting()">
-      Click button to begin recording</button>
-    <button class="timerEndButton" onclick="endTesting()">
-      Click button to end recording</button>
+    <button class="timerStartButton" onclick="beginTesting()">Start</button>
+    <button class="timerEndButton" onclick="endTesting()">Stop</button>
     <p id="timer" class = "timercontent">Time</p>
-      <div id="chartContainer" style="display: inline block; height: 300px; width: 50%; float: right;"></div>
-      <div id="chartContainer2" style="display: inline block; height: 300px; width: 50%; float: right;"></div>
-      <div id="chartContainer3" style="display: inline block; height: 300px; width: 50%; float: right;"></div>
+    <!-- <div style="width:33%;height:10px;border:1px solid #000;float: left; background-color: red;"></div>
+    <div style="width:33%;height:10px;border:1px solid #000;float: left; background-color: blue;"></div> --->
+    <div id="chartContainer" style="display: inline block; height: 300px; width: 33%; float: right;"></div>
+    <div id="chartContainer2" style="display: inline block; height: 300px; width: 33%; float: right;"></div>
+    <div id="chartContainer3" style="display: inline block; height: 300px; width: 33%; float: right;"></div>
 
 </body>
 </html>
