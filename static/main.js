@@ -43,6 +43,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
   	data: [{
   		type: "line",
       lineThickness: 5,
+      markerSize: 2,
   		dataPoints: dps
   	}]
   });
@@ -67,13 +68,13 @@ var updateChartPace = function (count) {
 		dps.shift();
 	}
 
-  var ideal = 30;
+  var ideal = 130;
   var max = ideal/3;
   var diff = Math.abs(ideal-yVal);
   if(diff > max - 1) {
     diff = max - 1;
   }
-  var index = Math.floor(diff/max * 100);
+  var index = 99-Math.floor(diff/max * 100);
   chart.options.data[0].lineColor = colorGrad[index];
 
 	chart.render();
@@ -97,6 +98,7 @@ var chart = new CanvasJS.Chart("chartContainer3", {
 	data: [{
 		type: "line",
     lineThickness: 5,
+    markerSize: 2,
 		dataPoints: dps
 	}]
 });
@@ -142,6 +144,7 @@ var chart = new CanvasJS.Chart("chartContainer2", {
 	data: [{
 		type: "line",
     lineThickness: 5,
+    markerSize: 2,
 		dataPoints: dps
 	}]
 });
