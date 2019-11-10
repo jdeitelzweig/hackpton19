@@ -3,22 +3,42 @@
 <head>
   <link rel="stylesheet" href="static/website.css">
   <title> cicero </title>
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-  <script src="static/app.js"></script>
-  <script src="static/main.js"></script>
 </head>
 <body>
-    <p>This application is designed to display real-time results for your
-    speech</p>
+    <div id="header">
+      <a href="#main">
+        <img src="static/ciceroLogo2.png" class = "frontHeader" alt = "Logo">
+      <a>
+      <!-- <button onclick="beginTesting()"></button> -->
+    </div>
 
-    <button class="timerStartButton" onclick="beginTesting()">Start</button>
-    <button class="timerEndButton" onclick="endTesting()">Stop</button>
-    <p id="timer" class = "timercontent">Time</p>
+  <div id = "main">
+    <div style="text-align:center;">
+      <p id="timer" class = "timercontent">Time 0h 0m 0s</p>
+    </div>
+
     <div id="chartContainer" style="display: inline block; height: 300px; width: 33%; float: right;"></div>
     <div id="chartContainer2" style="display: inline block; height: 300px; width: 33%; float: right;"></div>
     <div id="chartContainer3" style="display: inline block; height: 300px; width: 33%; float: right;"></div>
-
+    <div style="text-align:center;">
+      <button class="timerEndButton" onclick="endTesting()">Stop</button>
+    </div>
+  </div>
+  <script>
+  $(function () {
+  $('a[href*="#"]:not([href="#"])').on("click", function () {
+  var target = $(this.hash);
+  if (target.length) {
+  $("html, body").animate({
+    scrollTop: target.offset().top
+  },
+  1000);}
+});
+});
+</script>
+    <script src="static/app.js"></script>
+    <script src="static/main.js"></script>
 </body>
 </html>
