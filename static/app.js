@@ -18,6 +18,13 @@ function makeRequest(transcript, words_per_minute, conf) {
         confidence: conf
     };
     var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState == XMLHttpRequest.DONE) {
+            console.log("RECEIVED BACK: " + xmlhttp.responseText);
+            sents_received.push(parseFloat(xmlhttp.responseText));
+            // UPDATE GRAPH HERE
+        }
+    }
     xmlhttp.open("POST", "/_transcript", true);
     xmlhttp.setRequestHeader('Content-Type', 'application/json');
     xmlhttp.send(JSON.stringify(newTranscript));
