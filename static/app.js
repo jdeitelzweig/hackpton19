@@ -1,14 +1,14 @@
 
 var recognition = null;
-var socket = io.connect('http://localhost:5000/emit');
+//var socket = io.connect('https://hackpton2019.appspot.com:5000/emit');
 var wpms = [];
 var sents_received = [];
 var confidences = [];
 
-socket.on('nlp_sent', function(msg) {
-    console.log("Received sentiment: " + msg.sent);
-    sents_received.push(msg.sent);
-})
+// socket.on('nlp_sent', function(msg) {
+//     console.log("Received sentiment: " + msg.sent);
+//     sents_received.push(msg.sent);
+// })
 
 function makeRequest(transcript, words_per_minute, conf) {
     console.log("Making request");
