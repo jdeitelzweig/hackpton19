@@ -3,8 +3,6 @@ var myGraphOne;
 var myGraphTwo;
 var myGraphThree;
 
-chart.render();
-
 function runTimer() {
   clearInterval(myTimer);
   myTimer = setInterval(myClock, 1000);
@@ -31,6 +29,7 @@ function runGraphPace () {
 
 var dps = []; // dataPoints
 var chart = new CanvasJS.Chart("chartContainer", {
+  backgroundColor: "darkgrey",
   title :{
   	text: "Words Per Minute"
   	},
@@ -60,6 +59,7 @@ var updateChart = function (count) {
 		dps.shift();
 	}
 
+  chart.backgroundColor = "blue";
 	chart.render();
 };
 
@@ -72,6 +72,7 @@ function runGraphSentiment () {
 
 var dps = []; // dataPoints
 var chart = new CanvasJS.Chart("chartContainer3", {
+  backgroundColor: "darkgrey",
 	title :{
 		text: "Sentiment Score"
 	},
@@ -113,6 +114,7 @@ function runGraphClarity () {
 
 var dps = []; // dataPoints
 var chart = new CanvasJS.Chart("chartContainer2", {
+  backgroundColor: "darkgrey",
 	title :{
 		text: "Clarity Score"
 	},
@@ -153,14 +155,13 @@ myGraphTwo = setInterval(function(){updateChart()}, updateInterval);
 
 
 
-
-function beginTesting() {
+document.getElementById("header").addEventListener("click", function() {
   runTimer();
   runGraphPace();
   runGraphClarity();
   runGraphSentiment();
   startRecognition();
-}
+});
 
 function endTesting() {
   // var xmlhttp = new XMLHttpRequest();
