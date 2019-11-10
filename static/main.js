@@ -26,7 +26,7 @@ function runTimer() {
     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
     // Display the result in the element with id="demo"
-    document.getElementById("timer").innerHTML = "Time\n" + hours + "h "
+    document.getElementById("timer").innerHTML = "Time:\n" + hours + "h "
     + minutes + "m " + seconds + "s ";
   }
 }
@@ -35,9 +35,11 @@ function runGraphPace () {
 
 var dps = []; // dataPoints
 var chart = new CanvasJS.Chart("chartContainer", {
-  backgroundColor: "darkgrey",
+  backgroundColor: "rgba(167,64,187,0.0)",
   title :{
-  	text: "Words Per Minute"
+  	text: "Words Per Minute",
+    fontFamily: "AileronThin",
+    fontColor: "white"
   	},
   	axisY: {
   		includeZero: false
@@ -70,8 +72,6 @@ var updateChartPace = function (count) {
 		dps.shift();
 	}
 
-  chart.backgroundColor = "blue";
-
   var ideal = 130;
   var max = ideal/3;
   var diff = Math.abs(ideal-yVal);
@@ -93,9 +93,11 @@ function runGraphSentiment () {
 
 var dps = []; // dataPoints
 var chart = new CanvasJS.Chart("chartContainer3", {
-  backgroundColor: "darkgrey",
+  backgroundColor: "rgba(167,64,187,0.0)",
 	title :{
-		text: "Sentiment Score"
+		text: "Sentiment Score",
+    fontFamily: "AileronThin",
+    fontColor: "white"
 	},
 	axisY: {
 		includeZero: false
@@ -140,9 +142,11 @@ function runGraphClarity () {
 
 var dps = []; // dataPoints
 var chart = new CanvasJS.Chart("chartContainer2", {
-  backgroundColor: "darkgrey",
+  backgroundColor: "rgba(167,64,187,0.0)",
 	title :{
-		text: "Clarity Score"
+		text: "Clarity Score",
+    fontFamily: "AileronThin",
+    fontColor: "white"
 	},
 	axisY: {
 		includeZero: false
@@ -196,7 +200,7 @@ document.getElementById("header").addEventListener("click", function() {
   startRecognition();
 });
 
-function endTesting() {
+document.getElementById("endbutton").addEventListener("click", function() {
   // var xmlhttp = new XMLHttpRequest();
   // xmlhttp.open("POST", "/_transcript", true);
   // xmlhttp.setRequestHeader('Content-Type', 'application/json');
@@ -206,6 +210,6 @@ function endTesting() {
   clearInterval(myGraphTwo);
   clearInterval(myGraphThree);
   stopRecognition();
-}
+});
 // Get the element with id="defaultOpen" and click on it
 // document.getElementById("defaultOpen").click();

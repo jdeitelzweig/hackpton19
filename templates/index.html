@@ -5,26 +5,30 @@
   <title> cicero </title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+  <link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/aileron" type="text/css"/>
 </head>
 <body>
     <div id="header">
       <a href="#main">
-        <img src="static/ciceroLogo2.png" class = "frontHeader" alt = "Logo">
+        <img src="static/ciceroLogo.png" class = "frontHeader" alt = "Logo">
       <a>
+      <h1>Cicero</h1>
+      <h3>Click the logo to record</h3>
       <!-- <button onclick="beginTesting()"></button> -->
     </div>
 
   <div id = "main">
     <div style="text-align:center;">
-      <p id="timer" class = "timercontent">Time 0h 0m 0s</p>
+      <h2 id="timer" class = "timercontent">Time: 0h 0m 0s</h2>
     </div>
 
     <div id="chartContainer" style="display: inline block; height: 300px; width: 33%; float: right;"></div>
     <div id="chartContainer2" style="display: inline block; height: 300px; width: 33%; float: right;"></div>
     <div id="chartContainer3" style="display: inline block; height: 300px; width: 33%; float: right;"></div>
-    <div style="text-align:center;">
-      <button class="timerEndButton" onclick="endTesting()">Stop</button>
-    </div>
+    
+  </div>
+  <div id="endbutton">
+      <p>Stop</p>
   </div>
   <script>
   $(function () {

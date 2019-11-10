@@ -1,53 +1,52 @@
- /* .frontHeader{
-
-background: linear-gradient(235deg, #e44819, #149fa7, #5814a7);
-background-size: 600% 600%;
-
--webkit-animation: AnimationName 30s ease infinite;
--moz-animation: AnimationName 30s ease infinite;
-animation: AnimationName 30s ease infinite;
-
-@-webkit-keyframes AnimationName {
-    0%{background-position:0% 50%}
-    50%{background-position:100% 50%}
-    100%{background-position:0% 50%}
-}
-@-moz-keyframes AnimationName {
-    0%{background-position:0% 50%}
-    50%{background-position:100% 50%}
-    100%{background-position:0% 50%}
-}
-@keyframes AnimationName {
-    0%{background-position:0% 50%}
-    50%{background-position:100% 50%}
-    100%{background-position:0% 50%}
-}
-} */
-
 .frontHeader {
-  height:50%;
-  width: 100%;
+  height:20%;
+  width: 20%;
 }
+#endbutton {
+  text-align: center;
+  border-style: solid;
+  border-color: white;
+  border-width: 2px;
+  border-radius: 5px;
+  font-family: "AileronThin";
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+#header {
+  display: block;
+  text-align: center;
+  padding-bottom: 50%;
+  padding-top: 20%;
+  font-family: "AileronThin";
+  color: white;
+}
+
 #main {
-  height: 800px;
+  height: 600px;
 }
+
 body {
-  background-color: darkgrey;
+  height: 100%;
+  background: rgb(155,74,181);
+  background-image: linear-gradient(0deg, rgba(5,248,251,1) 0%, rgba(167,64,187,1) 100%);
 }
 
 h1 {
-  padding: 0;
+  padding: 4px;
   margin: 0;
+  font-size: 60px;
 }
 
 h3 {
   padding: 0;
   margin: 0;
-  color: black;
 }
 
-p {
-  color: black;
+.timercontent {
+  font-family: "AileronThin";
+  color: white;
 }
 
 .timerStartButton {
@@ -59,10 +58,6 @@ p {
   font-size: 10px;
   width: 50px;
   height: 50px;
-}
-
-.timercontent {
-  font-size: 20px;
 }
 
 .timerEndButton {
