@@ -45,7 +45,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
   });
 
 var xVal = 0;
-var yVal = 0;
+var yVal = 100;
 var updateInterval = 2000;
 var dataLength = 20; // number of dataPoints visible at any point
 var counter = 0;
@@ -135,7 +135,7 @@ var updateInterval = 1000;
 var dataLength = 20; // number of dataPoints visible at any point
 
 var updateChartClarity = function (count) {
-  yVal = yVal + 1;
+  yVal = confidence * 100;
   dps.push({
     x: xVal,
     y: yVal

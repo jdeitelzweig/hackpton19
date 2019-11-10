@@ -8,7 +8,8 @@ var confidences = [];
 var wc = 0;
 var prevWC = 0;
 var deltaWC = 0;
-var sent = 0
+var sent = 0;
+var confidence = 0;
 
 // socket.on('nlp_sent', function(msg) {
 //     console.log("Received sentiment: " + msg.sent);
@@ -71,14 +72,13 @@ function setup() {
         // }
         for (let i = event.resultIndex, len = event.results.length; i < len; i+= 2) {
             let transcript = event.results[i][0].transcript;
-            let confidence = event.results[i][0].confidence;
             wc = (finalTranscript + transcript).split(" ").length;
             deltaWC = Math.abs(prevWC - wc);
             if (deltaWC < MIN_DELTA) {
                 wc = prevWC;
             }
             else {
-                console.log("DELTA: " + deltaWC);
+                // console.log("DELTA: " + deltaWC);
                 prevWC = wc;
                 // myTimer is global in main.js is a timer starting at 0 when you start recording
                 wpm = (wc / secondsSinceStart) * 60;
@@ -87,9 +87,11 @@ function setup() {
                 confidences.push(confidence);
                 // console.log("CONFIDENCE: " + confidence);
                 // console.log("About to make request");
+                confidence = event.results[i][0].confidence;
                 makeRequest(transcript, wpm, confidence);
-                console.log("TRANSCRIPT: " + transcript);
-                console.log("WC: " + wc);
+                // console.log("TRANSCRIPT: " + transcript);
+                // console.log("WC: " + wc);
+                console.log("CONFIDENCE: " + confidence);
             }
             if (event.results[i].isFinal) {
                 finalTranscript += transcript;
