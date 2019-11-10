@@ -44,12 +44,18 @@ var chart = new CanvasJS.Chart("chartContainer", {
   });
 
 var xVal = 0;
-var yVal = 100;
-var updateInterval = 1000;
+var yVal = 0;
+var updateInterval = 2000;
 var dataLength = 20; // number of dataPoints visible at any point
+var counter = 0;
+var avgWPM = 0;
 
 var updateChart = function (count) {
-  yVal = yVal + 1;
+  if (wpms[counter] != null) {
+    avgWPM = ((counter - 1) * avgWPM + wpms[counter]) / counter;
+    yVal = avgWPM;
+    counter++;
+  }
   dps.push({
     x: xVal,
     y: yVal
