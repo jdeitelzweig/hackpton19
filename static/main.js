@@ -2,12 +2,14 @@ var myTimer;
 var myGraphOne;
 var myGraphTwo;
 var myGraphThree;
+var secondsSinceStart;
 
 chart.render();
 
 function runTimer() {
   clearInterval(myTimer);
   myTimer = setInterval(myClock, 1000);
+  console.log(myTimer);
   var currentTime = new Date().getTime();
   function myClock () {
     // Get today's date and time
@@ -15,6 +17,7 @@ function runTimer() {
 
     // Find the distance between now and the count down date
     var distance = now - currentTime;
+    secondsSinceStart = Math.floor(distance / 1000);
 
     // Time calculations for days, hours, minutes and seconds
     var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -50,16 +53,9 @@ var dataLength = 20; // number of dataPoints visible at any point
 var counter = 0;
 var avgWPM = 0;
 
-var updateChartPace = function (count) {
-  if (wpms[counter] != null) {
-    avgWPM = (xVal * avgWPM + wpms[counter]) / (xVal + 1);
-    yVal = avgWPM;
-    counter++;
-  }
-  else {
-    avgWPM = (xVal * avgWPM) / (xVal + 1);
-    yVal = avgWPM;
-  }
+
+var updateChart = function (count) {
+  yVal = (wc / secondsSinceStart) * 60;
   dps.push({
     x: xVal,
     y: yVal
