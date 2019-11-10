@@ -1,27 +1,12 @@
 var myTimer;
+var myGraphOne;
+var myGraphTwo;
+var myGraphThree;
 
-function openPage(pageName, elmnt, color) {
-  // Hide all elements with class="tabcontent" by default */
-  var i, tabcontent, tablinks;
-  tabcontent = document.getElementsByClassName("tabcontent");
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
-
-  // Remove the background color of all tablinks/buttons
-  tablinks = document.getElementsByClassName("tablink");
-  for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].style.backgroundColor = "";
-  }
-
-  // Show the specific tab content
-  document.getElementById(pageName).style.display = "block";
-
-  // Add the specific color to the button used to open the tab content
-  elmnt.style.backgroundColor = color;
-}
+chart.render();
 
 function runTimer() {
+  clearInterval(myTimer);
   myTimer = setInterval(myClock, 1000);
   var currentTime = new Date().getTime();
   function myClock () {
@@ -42,7 +27,138 @@ function runTimer() {
   }
 }
 
+function runGraphPace () {
+
+var dps = []; // dataPoints
+var chart = new CanvasJS.Chart("chartContainer", {
+  title :{
+  	text: "Words Per Minute"
+  	},
+  	axisY: {
+  		includeZero: false
+  	},
+  	data: [{
+  		type: "line",
+  		dataPoints: dps
+  	}]
+  });
+
+var xVal = 0;
+var yVal = 100;
+var updateInterval = 1000;
+var dataLength = 20; // number of dataPoints visible at any point
+
+var updateChart = function (count) {
+  yVal = yVal + 1;
+  dps.push({
+    x: xVal,
+    y: yVal
+  });
+  	xVal++;
+
+	if (dps.length > dataLength) {
+		dps.shift();
+	}
+
+	chart.render();
+};
+
+updateChart(dataLength);
+myGraphOne = setInterval(function(){updateChart()}, updateInterval);
+
+}
+
+function runGraphSentiment () {
+
+var dps = []; // dataPoints
+var chart = new CanvasJS.Chart("chartContainer3", {
+	title :{
+		text: "Sentiment Score"
+	},
+	axisY: {
+		includeZero: false
+	},
+	data: [{
+		type: "line",
+		dataPoints: dps
+	}]
+});
+
+var xVal = 0;
+var yVal = 100;
+var updateInterval = 1000;
+var dataLength = 20; // number of dataPoints visible at any point
+
+var updateChart = function (count) {
+  yVal = yVal + 1;
+  dps.push({
+    x: xVal,
+    y: yVal
+  });
+  	xVal++;
+
+	if (dps.length > dataLength) {
+		dps.shift();
+	}
+
+	chart.render();
+};
+
+updateChart(dataLength);
+myGraphThree = setInterval(function(){updateChart()}, updateInterval);
+
+}
+
+function runGraphClarity () {
+
+var dps = []; // dataPoints
+var chart = new CanvasJS.Chart("chartContainer2", {
+	title :{
+		text: "Clarity Score"
+	},
+	axisY: {
+		includeZero: false
+	},
+	data: [{
+		type: "line",
+		dataPoints: dps
+	}]
+});
+
+var xVal = 0;
+var yVal = 100;
+var updateInterval = 1000;
+var dataLength = 20; // number of dataPoints visible at any point
+
+var updateChart = function (count) {
+  yVal = yVal + 1;
+  dps.push({
+    x: xVal,
+    y: yVal
+  });
+  	xVal++;
+
+	if (dps.length > dataLength) {
+		dps.shift();
+	}
+
+	chart.render();
+};
+
+updateChart(dataLength);
+myGraphTwo = setInterval(function(){updateChart()}, updateInterval);
+
+}
+
+
+
+
+
 function beginTesting() {
+  runTimer();
+  runGraphPace();
+  runGraphClarity();
+  runGraphSentiment();
   startRecognition();
 }
 
@@ -51,6 +167,10 @@ function endTesting() {
   // xmlhttp.open("POST", "/_transcript", true);
   // xmlhttp.setRequestHeader('Content-Type', 'application/json');
   // xmlhttp.send(JSON.stringify({"test":"abc", "t2s":"wpm"}));
+  clearInterval(myTimer);
+  clearInterval(myGraphOne);
+  clearInterval(myGraphTwo);
+  clearInterval(myGraphThree);
   stopRecognition();
 }
 // Get the element with id="defaultOpen" and click on it
