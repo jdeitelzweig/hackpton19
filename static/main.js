@@ -146,6 +146,7 @@ var chart = new CanvasJS.Chart("chartContainer2", {
 	},
 	data: [{
 		type: "line",
+    color: "red",
 		dataPoints: dps
 	}]
 });
@@ -167,6 +168,10 @@ var updateChartClarity = function (count) {
 		dps.shift();
 	}
 
+  var box=document.getElementById("confBar");
+  var index = Math.floor(yVal * 100)
+  box.style.backgroundColor=colorGrad[index];
+
 	chart.render();
 };
 
@@ -174,9 +179,6 @@ updateChartClarity(dataLength);
 myGraphTwo = setInterval(function(){updateChartClarity()}, updateInterval);
 
 }
-
-
-
 
 
 function beginTesting() {
