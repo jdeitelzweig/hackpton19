@@ -4,8 +4,6 @@ var myGraphTwo;
 var myGraphThree;
 var secondsSinceStart;
 
-chart.render();
-
 function runTimer() {
   clearInterval(myTimer);
   myTimer = setInterval(myClock, 1000);
@@ -54,7 +52,7 @@ var counter = 0;
 var avgWPM = 0;
 
 
-var updateChart = function (count) {
+var updateChartPace = function (count) {
   yVal = (wc / secondsSinceStart) * 60;
   dps.push({
     x: xVal,
@@ -155,10 +153,6 @@ updateChartClarity(dataLength);
 myGraphTwo = setInterval(function(){updateChartClarity()}, updateInterval);
 
 }
-
-
-
-
 
 function beginTesting() {
   runTimer();
