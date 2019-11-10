@@ -4,7 +4,9 @@ var recognition = null;
 var wpms = [];
 var sents_received = [];
 var confidences = [];
-
+var wc = 0;
+var prevWC = 0;
+var deltaWC = 0;
 // socket.on('nlp_sent', function(msg) {
 //     console.log("Received sentiment: " + msg.sent);
 //     sents_received.push(msg.sent);
@@ -18,7 +20,7 @@ function makeRequest(transcript, words_per_minute, conf) {
         confidence: conf
     };
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
+    xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState == XMLHttpRequest.DONE) {
             console.log("RECEIVED BACK: " + xmlhttp.responseText);
             sents_received.push(parseFloat(xmlhttp.responseText));
@@ -28,13 +30,14 @@ function makeRequest(transcript, words_per_minute, conf) {
     xmlhttp.open("POST", "/_transcript", true);
     xmlhttp.setRequestHeader('Content-Type', 'application/json');
     xmlhttp.send(JSON.stringify(newTranscript));
-    
+
     return false;
 }
 
 function setup() {
     const MAX_WPM = 190; // Maximum speech acceptable words per minute
     const MAX_WORDS = 4;
+    const MIN_DELTA = 8;
 
     window.SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition; // Setup speech recognition
 
@@ -56,42 +59,67 @@ function setup() {
     recognition.onresult = (event) => {
         console.log("READING OUTPUT");
         let interimTranscript = '';
-        
-        if (reset) {
-            d = new Date();
-            startTime = d.getSeconds();
-            reset = false;
-        }
 
-        for (let i = event.resultIndex, len = event.results.length; i < len; i++) {
+        // if (reset) {
+        //     d = new Date();
+        //     startTime = d.getSeconds();
+        //     reset = false;
+        // }
+        for (let i = event.resultIndex, len = event.results.length; i < len; i+= 2) {
             let transcript = event.results[i][0].transcript;
             let confidence = event.results[i][0].confidence;
+            wc = (finalTranscript + transcript).split(" ").length;
+            deltaWC = Math.abs(prevWC - wc);
+            if (deltaWC < MIN_DELTA) {
+                wc = prevWC;
+            }
+            else {
+                console.log("DELTA: " + deltaWC);
+                prevWC = wc;
+                // myTimer is global in main.js is a timer starting at 0 when you start recording
+                wpm = (wc / secondsSinceStart) * 60;
+                wpms.push(wpm);
+
+                confidences.push(confidence);
+                // console.log("CONFIDENCE: " + confidence);
+                // console.log("About to make request");
+                makeRequest(transcript, wpm, confidence);
+                console.log("TRANSCRIPT: " + transcript);
+                console.log("WC: " + wc);
+            }
             if (event.results[i].isFinal) {
-                interimWordCount = transcript.split(" ").length;
-                finalTranscript += transcript; currentWordCount += interimWordCount;
-                if (interimWordCount >= MAX_WORDS) {
-                    var newD = new Date();
-                    var endTime = newD.getSeconds();
-                    if (endTime < startTime) endTime += 60;
-                    wpm = (currentWordCount / (endTime - startTime)) * 60;
-                    wpms.push(wpm);
-                    confidences.push(confidence);
-                    console.log("CONFIDENCE: " + confidence);
-                    console.log("About to make request");
-                    makeRequest(transcript, wpm, confidence);
-                    console.log("TRANSCRIPT: " + transcript);
-                    currentWordCount = 0;
-                    reset = true;
-                }
+                finalTranscript += transcript;
             } else {
                 interimTranscript += transcript;
             }
+            // if (event.results[i].isFinal) {
+            //     interimWordCount = transcript.split(" ").length;
+            //     finalTranscript += transcript;
+            //     currentWordCount += interimWordCount;
+            //     if (interimWordCount >= MAX_WORDS) {
+            //         var newD = new Date();
+            //         var endTime = newD.getSeconds();
+            //         if (endTime < startTime) endTime += 60;
+            //         wpm = (currentWordCount / (endTime - startTime)) * 60;
+            //         wpms.push(wpm);
+            //         confidences.push(confidence);
+            //         console.log("CONFIDENCE: " + confidence);
+            //         console.log("About to make request");
+            //         makeRequest(transcript, wpm, confidence);
+            //         console.log("TRANSCRIPT: " + transcript);
+            //         currentWordCount = 0;
+            //         reset = true;
+            //     }
+            // } else {
+            //     interimTranscript += transcript;
+            // }
         }
     }
     return recognition;
 }
 
 function startRecognition() {
+    wc = 0;
     if (recognition == null) recognition = setup();
     recognition.start();
 }
