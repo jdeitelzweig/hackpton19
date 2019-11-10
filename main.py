@@ -12,10 +12,14 @@ def root():
 @app.route('/_transcript', methods=['POST'])
 def handleTS():
 	if request.method == 'POST':
-		print("RECEIVED POST REQUEST")
-		print("PRINTED: " + json.dumps(request.json["ts"]))
+		data = json.dumps(request.json["ts"])
+		print(data)
 
-	return "200"
+		sent_score, sent_mag = nlp.get_sent(json.dumps(request.json["ts"]))
+		return str(sent_score)
+
+	return "500"
+
 
 # For development server only
 if __name__ == '__main__':
