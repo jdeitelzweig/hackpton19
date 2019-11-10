@@ -52,9 +52,13 @@ var avgWPM = 0;
 
 var updateChart = function (count) {
   if (wpms[counter] != null) {
-    avgWPM = ((counter - 1) * avgWPM + wpms[counter]) / counter;
+    avgWPM = (xVal * avgWPM + wpms[counter]) / (xVal + 1);
     yVal = avgWPM;
     counter++;
+  }
+  else {
+    avgWPM = (xVal * avgWPM) / (xVal + 1);
+    yVal = avgWPM;
   }
   dps.push({
     x: xVal,
